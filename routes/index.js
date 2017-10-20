@@ -21,8 +21,11 @@ router.get("/products/all/:shopid/:pages",scrapingController.getallproducts,scra
 
 
 
+
 //get product detail
 router.post("/product/",scrapingController.productdetail,scrapingController.responseproductdetail)
+
+router.post("/product/csv",scrapingController.productdetailcsv);
 
 
 
