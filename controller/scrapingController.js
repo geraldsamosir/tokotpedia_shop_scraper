@@ -102,12 +102,13 @@ module.exports = new class {
             detail : "p[itemprop='description']",
             berat  : ".detail-info@text",
             gambar  :"img[itemprop='image']@src",
-            category  : ".product-navetalase a@text"
+            category : [".breadcrumb li@text"]
             })(function(err,obj){
                     obj.berat = obj.berat.replace(/\s/g,'')
                     obj.berat = obj.berat.slice(parseInt(obj.berat.lastIndexOf("Berat") + 5) ,obj.berat.lastIndexOf("Terjual") -2)
                     obj.detail = obj.detail.replace(/\W+/g, " ")
                     obj.price = obj.price.replace(/\./g,'')
+                    obj.category =  obj.category[obj.category.length - 3 ]
 
                     callback(null,obj)
             })
@@ -124,7 +125,7 @@ module.exports = new class {
 
 
         productdetailcsv(req,res){
-            let fields =  ["title","idshop","price","detail","berat","gambar"]
+            let fields =  ["title","idshop","price","detail","berat","gambar","category"]
             let  data = req.body.data
             let result  =  json2csv({ data: data, fields: fields })
             fs.writeFile('./public/data.csv', result, function(err) {
